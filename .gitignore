@@ -1,5 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# sandbox-templates/
+
 # dependencies
 /node_modules
 /.pnp
@@ -39,3 +41,44 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Node modules
+node_modules/
+
+# Build output
+.next/
+out/
+dist/
+
+# Production environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Optional: Ignore coverage reports
+coverage/
+
+# Optional: Ignore local database
+*.sqlite
+*.sqlite3
+*.db
+
+# Optional: Ignore lock files (if not using yarn/npm lockfiles in team)
+# package-lock.json
+# yarn.lock
