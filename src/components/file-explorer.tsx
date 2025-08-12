@@ -1,11 +1,12 @@
-import { useCallback, useMemo, useState } from "react";
+import { Fragment, useCallback, useMemo, useState } from "react";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "./ui/resizable";
 import Hint from "./hint";
 import { Button } from "./ui/button";
-import { CopyIcon } from "lucide-react";
+import { CopyCheckIcon, CopyIcon } from "lucide-react";
 import CodeView from "./codeView";
 import { convertFilesToTreeItems } from "@/lib/utils";
 import TreeView from "./tree-view";
+import { Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "./ui/breadcrumb";
 
 
 
@@ -16,11 +17,77 @@ function getLanguageFromExtension(filename:string):string{
     return extension || "text";
 }
 
+interface FileBreadcrumbProps{
+    filePath : string;
+}
+
+const FileBreadcrumb = ({filePath}:FileBreadcrumbProps)=>{
+    const PathSegments = filePath.split("/");
+    const maxSegments = 4 ;
+
+    const renderBreadcrumbItems = ()=>{
+        if(PathSegments.length <= maxSegments){
+            return PathSegments.map((segment , index)=>{
+                const isLast = index ===PathSegments.length-1;
+
+                return (
+                    <Fragment key={index}>
+                        <BreadcrumbItem>
+                        {isLast ? (
+                            <BreadcrumbPage className="font-medium">
+                            {segment}
+                            </BreadcrumbPage>
+                        ): (
+                            <span className="text-muted-foreground">
+                                {segment}
+                            </span>
+                        )}
+                        </BreadcrumbItem>
+                        {!isLast && <BreadcrumbSeparator/>}
+                    </Fragment>
+                )
+            })
+        } else {
+            const firstSegement = PathSegments[0];
+            const lastSegement = PathSegments[PathSegments.length - 1]
+
+            return (
+                <>
+                <BreadcrumbItem>
+                <span className="text-muted-foreground">
+                    {firstSegement}
+                </span>
+                <BreadcrumbSeparator/>
+                <BreadcrumbItem>
+                <BreadcrumbEllipsis/>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator/>
+                <BreadcrumbItem>
+                <BreadcrumbPage className="font-medium">
+                {lastSegement}
+                </BreadcrumbPage>
+                </BreadcrumbItem>
+                </BreadcrumbItem>
+                </>
+            )
+        }
+    }
+    return (
+        <Breadcrumb>
+        <BreadcrumbList>
+        {renderBreadcrumbItems()}
+        </BreadcrumbList>
+        </Breadcrumb>
+    )
+}
+
 interface FileExplorerProps {
     files: FileCollection;
 }
 
 export const FileExplorer = ({files}: FileExplorerProps)=>{
+
+    const[copied , setCopied]= useState(false)
     const [selectedFile, setSelectedFile] = useState<string | null>(()=>{
         const fileKeys = Object.keys(files);
         return fileKeys.length > 0 ? fileKeys[0] : null;
@@ -38,6 +105,16 @@ export const FileExplorer = ({files}: FileExplorerProps)=>{
         }
     },[files])
 
+    // for copy the selected Code 
+    const handleCopy =  useCallback(()=> { 
+        if(selectedFile){
+            navigator.clipboard.writeText(files[selectedFile]);
+            setCopied(true);
+            setTimeout(()=>{
+                setCopied(false);
+            } , 2000)
+        }
+    }, [selectedFile , files])
 
     return (
         <ResizablePanelGroup direction="horizontal">
@@ -60,14 +137,16 @@ export const FileExplorer = ({files}: FileExplorerProps)=>{
                 {selectedFile && files[selectedFile] ? (
                     <div className="h-full w-full flex flex-col">
                         <div className="border-b bg-sidebar px-4 py-2 flex justify-between items-center gap-x-2">
+                            <FileBreadcrumb filePath={selectedFile}/>
+                            
                             <Hint text="Copy to clipboard" side="bottom">
                                 <Button variant="outline"
                                 size="icon"
                                 className="ml-auto"
-                                onClick={()=>{}}
-                                disabled={false}
+                                onClick={handleCopy}
+                                disabled={copied}
                                 >
-                                    <CopyIcon/>
+                                {copied ? <CopyCheckIcon/> : <CopyIcon/>}
                                 </Button>
                             </Hint>
                         </div>
@@ -77,7 +156,6 @@ export const FileExplorer = ({files}: FileExplorerProps)=>{
                             lang={getLanguageFromExtension(selectedFile)}
                             />
                         </div>
-                        <p>TODO : CODe view </p>
                     </div>
                 ) : (
                     <div className="flex h-full items-center justify-center text-muted-foreground">

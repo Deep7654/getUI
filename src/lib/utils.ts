@@ -2,9 +2,13 @@ import { TreeItem } from "@/types"
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
+
+// Utility function to merge class names in tailwind in Shadcn Ui 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+
+
 
 
 export function convertFilesToTreeItems(
