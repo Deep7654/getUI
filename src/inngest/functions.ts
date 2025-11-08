@@ -14,7 +14,7 @@ interface AgentState {
 
 export const helloWorld = inngest.createFunction(
   { id: "hello-world" },
-  { event: "test/hello.world" },
+  { event: "test/hello.world" }, 
   async ({ event , step}) => {
     const sandboxId = await step.run("get-sandbox-id" , async ()=>{
       const sandbox = await Sandbox.create("getuitest");

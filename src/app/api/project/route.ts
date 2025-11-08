@@ -20,7 +20,7 @@ export async function POST(req: Request) {
     if (!parsed.success) {
       return NextResponse.json(
         { error: parsed.error.errors[0].message },
-        { status: 400 }
+        { status: 404 }
       );
     }
 
