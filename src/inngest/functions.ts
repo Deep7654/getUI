@@ -26,7 +26,7 @@ export const helloWorld = inngest.createFunction(
       description : "An Expert Coding Agent",
       system: PROMPT,
       model :gemini({
-        model: "gemini-2.0-flash"
+        model: "gemini-2.5-flash"
       }),
       
       tools : [

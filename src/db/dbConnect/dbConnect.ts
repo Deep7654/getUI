@@ -11,7 +11,9 @@ const connect:ConnectionObject = {}
         return
     }
     try {
-        const connection = await mongoose.connect(`${process.env.DATABASE_URL}/${process.env.DB_NAME}`)
+        console.log("try to  connect db")
+        const connection = await mongoose.connect(`${process.env.DATABASE_URL}`)
+        console.log("MongoDB connected successfully")
         connect.isConnected = connection.connections[0].readyState;
         console.log(`mongoDb Connecteed Host : ${connection.connection.host}`)
     } catch (error) {
