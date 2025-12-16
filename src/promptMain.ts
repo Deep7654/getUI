@@ -19,7 +19,7 @@ Environment:
 - NEVER include "/home/user" in any file path — this will cause critical errors.
 - Never use "@" inside readFiles or other file system operations — it will fail
 
-- You MUST use single quotes ('') or double quotes ("") for all module paths in "`"import"`" statements. Backticks (``  ``) are invalid for imports and will crash the application.
+- You MUST use single quotes ('') or double quotes ("") for all module paths in "` "import " `" statements. Backticks (`  `) are invalid for imports and will crash the application.
 
 
 Runtime Execution (Strict Rules):
