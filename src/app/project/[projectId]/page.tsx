@@ -1,26 +1,26 @@
 import { HydrationBoundary, dehydrate, QueryClient } from '@tanstack/react-query'
 import View from '../../../modules/project/ui/view/ProjectView'
-import { getProject, getMessages } from '@/lib/queries'
+import { fetchProject, fetchMessages } from '@/lib/fetchers'
 
 interface Props {
-  params: Promise<{
+  params: {
     projectId: string
-  }>
+  }
 }
 
 export default async function Page({ params }: Props) {
-  const { projectId } = await params // ✅ FIX
+  const { projectId } = params
 
   const queryClient = new QueryClient()
 
   await queryClient.prefetchQuery({
     queryKey: ['project', projectId],
-    queryFn: () => getProject(projectId),
+    queryFn: () => fetchProject(projectId),
   })
 
   await queryClient.prefetchQuery({
     queryKey: ['messages', projectId],
-    queryFn: () => getMessages(projectId),
+    queryFn: () => fetchMessages(projectId),
   })
 
   return (

@@ -27,16 +27,22 @@ export async function POST(req: Request) {
     const { message } = parsed.data;
 
     await dbConnect();
+    
+    console.log("DB Connected at /api/project route");
 
+    // Create new Project
     const createdUser = await Project.create({
       name: "ProjectNameRandom",
     });
 
+    //assign message to project and Role USER
     const userMsg = await Message.create({
       content: message,
       projectId: createdUser._id,
       messageRole : "USER"
     });
+
+    // Update Project with the new message
     await Project.findByIdAndUpdate(
     createdUser._id,
   { 
