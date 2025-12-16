@@ -34,6 +34,8 @@ export default function ProjectForm() {
         try {
         setLoading(true)
         setDisable(true)
+
+        // API Call to create project
       const res = await fetch("/api/project", { 
       method: "POST",
       headers: {
@@ -45,6 +47,8 @@ export default function ProjectForm() {
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${data.error}`)
       }
+
+      // Push to project page
       router.push(`/project/${data.createdUser._id}`)
     } catch (error) {
         console.log(error)

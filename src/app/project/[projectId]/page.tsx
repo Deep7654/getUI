@@ -3,13 +3,13 @@ import View from '../../../modules/project/ui/view/ProjectView'
 import { getProject, getMessages } from '@/lib/queries'
 
 interface Props {
-  params: {
+  params: Promise< {
     projectId: string
-  }
+  }>
 }
 
 export default async function Page({ params }: Props) {
-  const { projectId } = params
+  const { projectId } = await params
 
   const queryClient = new QueryClient()
 
@@ -29,3 +29,6 @@ export default async function Page({ params }: Props) {
     </HydrationBoundary>
   )
 }
+
+
+
