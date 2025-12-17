@@ -1,6 +1,7 @@
 import { HydrationBoundary, dehydrate, QueryClient } from '@tanstack/react-query'
 import View from '../../../modules/project/ui/view/ProjectView' 
 import { getProject, getMessages } from '@/lib/queries'
+import dbConnect from '@/db/dbConnect/dbConnect'
 
 interface Props {
   params: Promise< {
@@ -10,6 +11,8 @@ interface Props {
 
 export default async function Page({ params }: Props) {
   const { projectId } = await params
+  await dbConnect()
+  console.log("DB Connected at /project/[projectId] page")
 
   const queryClient = new QueryClient()
 
