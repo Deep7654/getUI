@@ -1,15 +1,16 @@
 import mongoose from "mongoose"
 // import { Schema } from "zod";
 
-export interface IFragment extends mongoose.Document {
-    messageId: mongoose.Schema.Types.ObjectId;
-    sandboxUrl: string;
-    title?: string;
-    file?: JSON;
-    fragmentType?: string;
-}
+// export interface IFragment extends mongoose.Document {
+//     messageId: mongoose.Schema.Types.ObjectId;
+//     sandboxUrl: string;
+//     title?: string;
+//     file?: JSON;
+//     fragmentType?: string;
+// }
+// const fragmentSchema : mongoose.Schema<IFragment> = new mongoose.Schema({
 
-const fragmentSchema : mongoose.Schema<IFragment> = new mongoose.Schema({
+const fragmentSchema = new mongoose.Schema({
    messageId: {
   type: mongoose.Schema.Types.ObjectId,
   ref: "Message", // optional, if you want

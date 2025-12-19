@@ -5,7 +5,7 @@ import { PROMPT } from "@/prompt";
 import { inngest } from "./client";
 import { getSandbox, lastAssistantTextMessageContent } from "./utils";
 import { Message } from "@/db/models/message.model";
-import { Fragment } from "@/db/models/fragment";
+import { Fragment } from "@/db/models/fragment.model";
 
 interface AgentState {
   summary : string,

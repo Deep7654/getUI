@@ -7,7 +7,7 @@ const messageSchema =  new mongoose.Schema({
     },
     fragmentId: {
         type : mongoose.Schema.Types.ObjectId,
-        ref : "Fragment"
+        ref : "Fragment",
     },
     messageRole : {
         type: String,
